@@ -23,8 +23,11 @@ export default class ErrorMessages extends React.Component {
     }
 
     render() {
+	if(this.state.errors.length == 0){
+	    return null;
+	}
+	
 	return (
-	    {this.state.errors &&
 		<div className="alert alert-danger" role="alert">
 		{ this.state.errors.map(function(item, i) {
 		    return <div key={i}>
@@ -34,7 +37,6 @@ export default class ErrorMessages extends React.Component {
 		    </div>
 		})}
 	     </div>
-	    }
     );
   }
 }
