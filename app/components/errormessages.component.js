@@ -16,20 +16,16 @@ export default class ErrorMessages extends React.Component {
 
     constructor(props) {
 	super(props);
-
-	this.state = {
-	    errors: [] // ["Enter a valid email", "TEST"]
-	};
     }
 
     render() {
-	if(this.state.errors.length == 0){
+	if(this.props.errors.length == 0){
 	    return null;
 	}
 	
 	return (
 		<div className="alert alert-danger" role="alert">
-		{ this.state.errors.map(function(item, i) {
+		{ this.props.errors.map(function(item, i) {
 		    return <div key={i}>
 			<span className="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 			<span className="sr-only">Error: </span>

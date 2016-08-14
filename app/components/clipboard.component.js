@@ -1,9 +1,6 @@
 import React from 'react';
 import ClassNames from 'classnames';
-import Auth from '../services/AuthService';
-import ErrorMessages from '../components/errormessages.component';
-import LoginButton from '../components/loginbutton.component';
-import { hashHistory } from 'react-router'
+const {clipboard} = require('electron');
 
 export default class Login extends React.Component {
 
@@ -11,38 +8,12 @@ export default class Login extends React.Component {
 	super(props);
 
 	this.state = {
-	    user: 'geek42@hotmail.com',
-	    password: 'lalalala',
+	    data: [],
+	    poll_frequency: 1000,
+	    history_length: 10,
 	    errors: [],
 	    loading: false,
 	};
-	this.login = this.login.bind(this);
-	this.handleChange = this.handleChange.bind(this);
-	this.loginResp = this.loginResp.bind(this);
-    }
-
-    // Sets the state to the input value, called when inputs change
-    handleChange(e) {
-	this.setState({errors: []});
-	this.setState({[e.target.name]: e.target.value});
-    }
-
-    // This will be called when the user clicks on the login button
-    login(e) {
-	e.preventDefault();
-	this.setState({loading: true});
-	Auth.login(this.state.user, this.state.password, this.loginResp);
-    }
-
-    // Function call on function (resp)onse from server expects the result
-    // in the format: [boolean success, string error message] 
-    loginResp(rep) {
-	this.setState({loading: false});
-	if(rep[0]){
-	    hashHistory.push(`/main`);
-	}else{
-	    this.setState({errors: [rep[1]]});
-	}
     }
 
     render() {

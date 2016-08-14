@@ -1,13 +1,9 @@
 //React library
 import React from 'react';
-//Axios for Ajax
-import Axios from 'axios';
-//Custom components
-import Details from '../components/details.component';
-import Progress from '../components/progress.component';
-import Search from '../components/search.component';
 import Login from '../components/login.component';
-import Footer from '../components/footer.component';
+import Main from '../components/main.component';
+
+import { Router, Route, hashHistory } from 'react-router'
 
 class AppContainer extends React.Component {
 
@@ -18,9 +14,13 @@ class AppContainer extends React.Component {
     
     render () {
 	return (
-		<Login/>
+	     <Router history={hashHistory}>
+	        <Route path="/" component={Login} />
+	        <Route path="/main" component={Main} />
+	    </Router>
 	);
     }
 }
+
 
 export default AppContainer

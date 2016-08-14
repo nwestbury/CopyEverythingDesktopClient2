@@ -19,6 +19,10 @@ html {
   }
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 .width100{
     width: 100px;
 }
@@ -241,4 +245,42 @@ input[type="color"]:focus,
 .alert-font{
 	font-family: MaisonNeue-light;
 	font-size: 20px;
+}
+
+$offset: 187;
+$duration: 1.1s;
+
+.spinner {
+  animation: rotator $duration linear infinite;
+}
+
+@keyframes rotator {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+
+.path {
+  stroke-dasharray: $offset;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation:
+    dash $duration ease-in-out infinite, 
+    colors ($duration*4) ease-in-out infinite;
+}
+
+@keyframes colors {
+  0% { stroke: $primary-color; }
+  100% { stroke: $secondary-color; }
+}
+
+@keyframes dash {
+ 0% { stroke-dashoffset: $offset; }
+ 50% {
+   stroke-dashoffset: $offset/4;
+   transform:rotate(135deg);
+ }
+ 100% {
+   stroke-dashoffset: $offset;
+   transform:rotate(450deg);
+ }
 }
