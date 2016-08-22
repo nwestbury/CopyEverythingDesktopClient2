@@ -1,9 +1,10 @@
 import React from 'react';
 import ClassNames from 'classnames';
-import Auth from '../services/AuthService';
 import ErrorMessages from '../components/errormessages.component';
 import LoginButton from '../components/loginbutton.component';
-import { hashHistory } from 'react-router'
+import { hashHistory } from 'react-router';
+import { connect } from 'react-redux';
+import { login } from '../actions';
 
 export default class Login extends React.Component {
 
@@ -16,6 +17,7 @@ export default class Login extends React.Component {
 	    errors: [],
 	    loading: false,
 	};
+	this.dispatch = this.props.dispatch;
 	this.login = this.login.bind(this);
 	this.handleChange = this.handleChange.bind(this);
 	this.loginResp = this.loginResp.bind(this);
@@ -31,7 +33,7 @@ export default class Login extends React.Component {
     login(e) {
 	e.preventDefault();
 	this.setState({loading: true});
-	Auth.login(this.state.user, this.state.password, this.loginResp);
+	this.dispatch(login(this.state.user, this.state.password, this.loginResp));
     }
 
     // Function call on function (resp)onse from server expects the result
@@ -72,5 +74,7 @@ export default class Login extends React.Component {
     );
   }
 }
+
+Login = connect()(Login);
 
 export default Login

@@ -9,18 +9,20 @@ import { Router, Route, hashHistory } from 'react-router';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux';
 
-const store = createStore();
+import login from '../reducers/main';
+
+let store = createStore(login);
 
 class AppContainer extends React.Component {
 
     constructor(props) {
-	super(props);
-	this.state = {};
+	    super(props);
+	    this.state = {};
     }
     
     render () {
 	return (
-		<Provider store={store}
+		<Provider store={store}>
 		    <Router history={hashHistory}>
 	                <Route path="/" component={Login} />
 	                <Route path="/main" component={Main} />

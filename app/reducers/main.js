@@ -1,28 +1,32 @@
-const todo = (state, action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      console.log("OK fine");
-  case 'TOGGLE_TODO':
-      console.log("OK fine2");
-  default:
-      console.log("DEfault");
+const callback = (state, action) => {
+    console.log("TESTY", state, action, action.type)
+    switch (action.type) {
+    case 'LOGIN':
+	console.log("OK fine");
+	break;
+    case 'TOGGLE_TODO':
+	console.log("OK fine2");
+	break;
+    default:
+	console.log("DEfault");
+	break;
   }
 }
 
-const todos = (state = [], action) => {
+const actions = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_TODO':
+    case 'LOGIN':
       return [
         ...state,
-        todo(undefined, action)
+        callback(undefined, action)
       ]
     case 'TOGGLE_TODO':
       return state.map(t =>
-        todo(t, action)
+        callback(t, action)
       )
     default:
       return state
   }
 }
 
-export default todos
+export default actions
