@@ -3,13 +3,13 @@
 import io from 'socket.io-client';
 
 class AuthService {
-    createSocket() {
+    init() {
 	var socket = io("https://www.copyeverythingapp.com");
 	return socket;
     }
     login(username, password, callback) {
 	if(typeof this.socket == 'undefined'){
-	    this.socket = this.createSocket();
+	    this.socket = this.init();
 	}
 
 	this.socket.emit('auth', {
@@ -20,4 +20,4 @@ class AuthService {
     }
 }
 
-export default new AuthService();
+export default AuthService;

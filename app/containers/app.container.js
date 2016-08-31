@@ -4,14 +4,15 @@ import Login from '../components/login.component';
 import Main from '../components/main.component';
 
 import { Router, Route, hashHistory } from 'react-router';
+import thunkMiddleware from 'redux-thunk'
 
 // Annoying React Redux stuff, blame/praise Nathan1 for this...
-import { Provider } from 'react-redux'
-import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 
-import login from '../reducers/main';
+import rootReducer from '../reducers/login.reducer';
 
-let store = createStore(login);
+let store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 class AppContainer extends React.Component {
 

@@ -4,7 +4,7 @@ import ErrorMessages from '../components/errormessages.component';
 import LoginButton from '../components/loginbutton.component';
 import { hashHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { login } from '../actions';
+import { login } from '../actions/login.action';
 
 export default class Login extends React.Component {
 
@@ -21,6 +21,8 @@ export default class Login extends React.Component {
 	this.login = this.login.bind(this);
 	this.handleChange = this.handleChange.bind(this);
 	this.loginResp = this.loginResp.bind(this);
+
+	console.log("ASD", this, this.props);
     }
 
     // Sets the state to the input value, called when inputs change
@@ -75,6 +77,22 @@ export default class Login extends React.Component {
   }
 }
 
-Login = connect()(Login);
+const mapStateToProps = (state) => {
+  return {
+      login: state.login,
+      status: state.status,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      test: (user, pass) => {
+	  dispatch(login(user, pass));
+	  console.log("GOT LOGIN");
+    }
+  }
+}
+
+Login = connect(mapStateToProps, mapDispatchToProps)(Login);
 
 export default Login
