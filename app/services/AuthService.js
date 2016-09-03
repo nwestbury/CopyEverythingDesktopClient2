@@ -18,6 +18,21 @@ class AuthService {
 	});
 	this.socket.once('auth resp', callback);
     }
+
+    set_clipboard_pull_callback(callback){
+	this.socket.on('new server copy', callback);
+    }
+
+    push_clipboard(text){
+	this.socket.emit('new client copy', text);
+    }
 }
 
 export default AuthService;
+
+
+
+
+
+
+

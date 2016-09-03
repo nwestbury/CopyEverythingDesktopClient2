@@ -1,37 +1,49 @@
-export const loginFail = (user, pass) => {
+import { push } from 'react-router-redux';
+
+export const resetErrors = () => {
+    return {
+	type: 'RESET_ERRORS',
+    }
+}
+
+export const loginFail = (errors) => {
   return {
       type: 'LOGIN_FAIL',
-      status,
+      errors,
   }
 }
 
-export const loginSuccess = (user, pass) => {
+export const loginSuccess = (errors) => {
   return {
       type: 'LOGIN_SUCCESS',
-      status,
+      errors,
   }
 }
 
-export const authInit = (user, pass) => {
+export const loginInit = (user, pass) => {
   return {
-      type: 'AUTH_INIT',
+      type: 'LOGIN_REQUEST',
       user,
       pass,
   }
 }
 
+// Function call on function (resp)onse from server expects the result
+// in the format: [boolean success, string error message] 
 export function login(user, pass) {
     return (dispatch, getState) => {
 
-	dispatch(authInit(user, pass));
+	dispatch(loginInit(user, pass));
 
-	var state = getState();
+	var state = getState().loginReducer;
 
 	state.auth.login(user, pass, function(resp){
+	    var status = [resp[1]];
 	    if(resp[0]){
-		dispatch(loginSuccess(resp[1]));
+		dispatch(loginSuccess(status));
+		dispatch(push('/main'));
 	    }else{
-		dispatch(loginFail(resp[1]));
+		dispatch(loginFail(status));
 	    }
 	});
     }

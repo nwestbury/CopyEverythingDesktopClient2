@@ -1,54 +1,46 @@
 import AuthService from '../services/AuthService.js';
 
 const initialState = {
+    data: [],
+    active_id: -1,
     login: false,
-    status: "",
+    errors: [],
     auth: undefined,
-}
-
-const callback = (state, action) => {
-    switch (action.type) {
-    case 'AUTH_INIT':
-	console.log("TEST");
-	break;
-    case 'LOGIN_REQUEST':
-	console.log("OK fine");
-	break;
-    case 'TOGGLE_TODO':
-	console.log("OK fine2");
-	break;
-    default:
-	console.log("DEfault");
-	break;
-  }
+    loading: false,
 }
 
 const actions = (state = initialState, action) => {
     switch (action.type) {
-    case 'AUTH_INIT':
+    case 'LOGIN_REQUEST':
 	if (!state.auth){
 	    return Object.assign({}, state, {
 		auth: new AuthService(),
+		loading: true,
 	    });
 	}
-	return state;
+	return Object.assign({}, state, {
+	    loading: true,
+	});
+	
     case 'LOGIN_FAIL':
 	return Object.assign({}, state, {
 	    login: false,
-	    status: action.status,
+	    loading: false,
+	    errors: action.errors,
 	});
     case 'LOGIN_SUCCESS':
 	return Object.assign({}, state, {
 	    login: true,
-	    status: action.status,
+	    loading: false,
+	    errors: [],
+	});
+    case 'RESET_ERRORS':
+	return Object.assign({}, state, {
+	    errors: [],
 	});
     default:
 	return state;
   }
 }
 
-export default actions
-
-
-
-
+export default actions;

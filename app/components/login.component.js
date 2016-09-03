@@ -4,7 +4,7 @@ import ErrorMessages from '../components/errormessages.component';
 import LoginButton from '../components/loginbutton.component';
 import { hashHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { login } from '../actions/login.action';
+import { login, resetErrors } from '../actions/login.action';
 
 export default class Login extends React.Component {
 
@@ -14,39 +14,22 @@ export default class Login extends React.Component {
 	this.state = {
 	    user: 'geek42@hotmail.com',
 	    password: 'lalalala',
-	    errors: [],
-	    loading: false,
 	};
 	this.dispatch = this.props.dispatch;
 	this.login = this.login.bind(this);
 	this.handleChange = this.handleChange.bind(this);
-	this.loginResp = this.loginResp.bind(this);
-
-	console.log("ASD", this, this.props);
     }
 
     // Sets the state to the input value, called when inputs change
     handleChange(e) {
-	this.setState({errors: []});
+	this.dispatch(resetErrors());
 	this.setState({[e.target.name]: e.target.value});
     }
 
     // This will be called when the user clicks on the login button
     login(e) {
 	e.preventDefault();
-	this.setState({loading: true});
-	this.dispatch(login(this.state.user, this.state.password, this.loginResp));
-    }
-
-    // Function call on function (resp)onse from server expects the result
-    // in the format: [boolean success, string error message] 
-    loginResp(rep) {
-	this.setState({loading: false});
-	if(rep[0]){
-	    hashHistory.push(`/main`);
-	}else{
-	    this.setState({errors: [rep[1]]});
-	}
+	this.dispatch(login(this.state.user, this.state.password));
     }
 
     render() {
@@ -70,7 +53,7 @@ export default class Login extends React.Component {
 	               </div>
 	            </form>
 		<div className="row col-xs-offset-1 col-xs-10 top-margin-10">
-		    <ErrorMessages errors={this.state.errors} />
+		    <ErrorMessages errors={this.props.errors} />
 		</div>
 		</div>
     );
@@ -79,20 +62,12 @@ export default class Login extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-      login: state.login,
-      status: state.status,
+      login: state.loginReducer.login,
+      loading: state.loginReducer.loading,
+      errors: state.loginReducer.errors,
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-      test: (user, pass) => {
-	  dispatch(login(user, pass));
-	  console.log("GOT LOGIN");
-    }
-  }
-}
-
-Login = connect(mapStateToProps, mapDispatchToProps)(Login);
+Login = connect(mapStateToProps)(Login);
 
 export default Login
