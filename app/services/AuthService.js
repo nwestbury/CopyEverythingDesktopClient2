@@ -3,13 +3,13 @@
 import io from 'socket.io-client';
 
 class AuthService {
-    createSocket() {
+    init() {
 	var socket = io("https://www.copyeverythingapp.com");
 	return socket;
     }
     login(username, password, callback) {
 	if(typeof this.socket == 'undefined'){
-	    this.socket = this.createSocket();
+	    this.socket = this.init();
 	}
 
 	this.socket.emit('auth', {
@@ -18,6 +18,21 @@ class AuthService {
 	});
 	this.socket.once('auth resp', callback);
     }
+
+    set_clipboard_pull_callback(callback){
+	this.socket.on('new server copy', callback);
+    }
+
+    push_clipboard(text){
+	this.socket.emit('new client copy', text);
+    }
 }
 
-export default new AuthService();
+export default AuthService;
+
+
+
+
+
+
+

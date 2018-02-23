@@ -1,24 +1,19 @@
 import React from 'react';
 import ClassNames from 'classnames';
-import Auth from '../services/AuthService';
+import Clipboard from '../components/clipboard.component';
 
 export default class Main extends React.Component {
 
     constructor(props) {
 	super(props);
-
-	this.state = {
-	    user: '',
-	    password: '',
-	    errors: [],
-	    loading: false,
-	};
     }
 
     render() {
 	return (
-		<div className="form-horizontal row">
-                    FUN TIME MOTHER FUCKKKKER!
+		<div className="row">
+		    <div className="col-xs-offset-1 col-xs-10">
+	               <Clipboard />
+	            </div>
 		</div>
     );
   }

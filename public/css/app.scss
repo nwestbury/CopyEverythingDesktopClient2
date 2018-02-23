@@ -47,18 +47,24 @@ html {
 
 .background{
     background-color: white; // $bck-color;
+    width: 90%;
 }
 
-
-@media screen and (min-width: 768px){
+@media screen and (min-width: 768px) {
        .mainTitle{
 		font-size: 80px !important;
 	}
 }
 
-@media screen and (max-width: 768px){
+@media screen and (min-width: 540px) and (max-width: 768px){
        .mainTitle{
 		font-size: 60px !important;
+	}
+}
+
+@media screen and (max-width: 540px){
+       .mainTitle{
+		font-size: 40px !important;
 	}
 }
 
